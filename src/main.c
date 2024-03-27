@@ -13,6 +13,17 @@ void put_exit_or_not(int ret_value)
         my_putstr("exit\n");
 }
 
+int contains_only_whitespace(const char *str)
+{
+    while (*str) {
+        if (!(*str == ' ' || *str == '\t')) {
+            return 0;
+        }
+        str++;
+    }
+    return 1;
+}
+
 int create_prompt_command(info_env_t *info, list_t *chain)
 {
     char *lineptr = NULL;
@@ -28,7 +39,8 @@ int create_prompt_command(info_env_t *info, list_t *chain)
             return 0;
         }
         lineptr = remove_end(lineptr);
-        if (lineptr == NULL || lineptr[0] == '\0')
+        if (lineptr == NULL || lineptr[0] == '\0' ||
+        contains_only_whitespace(lineptr))
             continue;
         info->command = my_str_to_word_array(lineptr, ' ');
         info->ret = execute_command(info, chain);
