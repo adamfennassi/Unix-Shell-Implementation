@@ -6,8 +6,50 @@
 */
 #include "mysh.h"
 
+char *remove_end_of_line(char *str)
+{
+    size_t len = strlen(str);
+    int i = len;
+
+    while (i > 0 && (str[i - 1] == ' ' ||
+    str[i - 1] == '\t' || str[i - 1] == '\n')) {
+        i--;
+    }
+    str[i] = '\0';
+    return str;
+}
+
+void line_to_token(env_config_t *env, char *line)
+{
+    char *token;
+    int max_tokens = 100000;
+    int i = 0;
+
+    env->line_cmd = malloc(sizeof(char *) * max_tokens);
+    token = strtok(line, " ");
+    while (token != NULL) {
+        env->line_cmd[i] = my_strdup(token);
+        token = strtok(NULL, " ");
+        i++;
+    }
+}
+
 int lunch_shell(list_t *list, env_config_t *env_strct)
 {
+    char *line_cmd = NULL;
+    int verif;
+    size_t size;
+
+    while (1) {
+        my_putstr("$> ");
+        verif = getline(&line_cmd, &size, stdin);
+        if (verif == -1) {
+            my_putstr("exit\n");
+            return 0;
+        }
+        line_cmd = remove_end_of_line(line_cmd);
+        line_to_token(env_strct, line_cmd);
+    }
 }
 
 char **init_env(char **env, env_config_t *env_strct)

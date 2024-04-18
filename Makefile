@@ -10,6 +10,7 @@ SRC 	=	src/main.c\
 			src/my_strlen.c\
 			src/get_env.c\
 			src/set_list.c\
+			src/my_putstr.c\
 
 OBJ	=	$(SRC:.c=.o)
 

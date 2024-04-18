@@ -7,13 +7,14 @@
 
 #include "mysh.h"
 
-
 char *my_strdup(char *data)
 {
-    char *str = malloc(sizeof(char) * (my_strlen(data) + 1));
+    int length = my_strlen(data);
+    char *str = malloc(sizeof(char) * (length + 1));
 
-    str[my_strlen(data)] = '\0';
-    for (int i = 0; data[i] != '\0'; i++)
+    for (int i = 0; i < length; i++) {
         str[i] = data[i];
+    }
+    str[length] = '\0';
     return str;
 }

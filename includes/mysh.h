@@ -23,7 +23,7 @@ typedef struct list {
 
 typedef struct env_config {
     char **path;
-    char **command;
+    char **line_cmd;
     char *execute;
     char **env;
     int ret;
@@ -31,6 +31,7 @@ typedef struct env_config {
 
 char *my_strdup(char *data);
 int my_strlen(char const *str);
+int my_putstr(char const *str);
 
 char *remove_path(char *str);
 int get_len(char **env);
