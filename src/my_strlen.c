@@ -11,6 +11,9 @@ int my_strlen(char const *str)
     int counter = 0;
 
     while (str[i] != '\0') {
+        if (str[i] == '\t') {
+            i++;
+        }
         i++;
         counter++;
     }

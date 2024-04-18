@@ -4,74 +4,45 @@
 ** File description:
 ** mysh
 */
-
 #include "mysh.h"
 
-void put_exit_or_not(int ret_value)
+int lunch_shell(list_t *list, env_config_t *env_strct)
 {
-    if (ret_value == -1 && isatty(0) == 1)
-        my_putstr("exit\n");
 }
 
-int contains_only_whitespace(const char *str)
+char **init_env(char **env, env_config_t *env_strct)
 {
-    while (*str) {
-        if (!(*str == ' ' || *str == '\t')) {
-            return 0;
-        }
-        str++;
+    char *path;
+    char *new_path = NULL;
+    int num_tokens = 0;
+    char *token;
+    int i = 0;
+
+    env_strct->env = get_env(env);
+    path = get_path(env);
+    new_path = remove_path(path);
+    for (char *ptr = strtok(new_path, ":");
+    ptr != NULL; ptr = strtok(NULL, ":"))
+        num_tokens++;
+    env_strct->path = malloc(sizeof(char *) * (num_tokens + 1));
+    for (token = strtok(new_path, ":");
+    token != NULL; token = strtok(NULL, ":")) {
+        env_strct->path[i] = my_strdup(token);
+        i++;
     }
-    return 1;
-}
-
-int create_prompt_command(info_env_t *info, list_t *chain)
-{
-    char *lineptr = NULL;
-    size_t n = 0;
-    int return_value = 0;
-
-    while (1) {
-        if (isatty(0) == 1)
-            my_putstr("$> ");
-        return_value = getline(&lineptr, &n, stdin);
-        if (return_value == -1) {
-            put_exit_or_not(return_value);
-            return 0;
-        }
-        lineptr = remove_end(lineptr);
-        if (lineptr == NULL || lineptr[0] == '\0' ||
-        contains_only_whitespace(lineptr))
-            continue;
-        info->command = my_str_to_word_array(lineptr, ' ');
-        info->ret = execute_command(info, chain);
-    }
-    return info->ret;
-}
-
-int minishell_config(char **env)
-{
-    list_t *list = NULL;
-    info_env_t *env_info = malloc(sizeof(info_env_t));
-    int value = 0;
-
-    if (create_env_informations(env, env_info) == NULL) {
-        write(2, "Error with read env\n", 20);
-        return 84;
-    }
-    list = env_in_list(env_info->env);
-    value = create_prompt_command(env_info, list);
-    return value;
+    env_strct->path[num_tokens] = NULL;
+    return env_strct->path;
 }
 
 int main(int ac, char **av, char **env)
 {
-    int value;
+    env_config_t *env_struct = malloc(sizeof(env_config_t));
+    list_t *shell_list = malloc(sizeof(list_t));
 
-    if (ac != 1) {
-        my_putstr("ERROR : too many command.\n");
+    if (ac != 1)
         return 84;
-    } else {
-        value = minishell_config(env);
-        return value;
-    }
+    if (init_env(env, env_struct) == NULL)
+        return 84;
+    shell_list = init_list(env);
+    return lunch_shell(shell_list, env_struct);
 }
