@@ -7,11 +7,11 @@
 
 #include "mysh.h"
 
-char *remove_path(char *str)
+char *remove_prefix(char *str, char *remove)
 {
     char *res;
     int str_length = my_strlen(str);
-    int delete_length = my_strlen("PATH=");
+    int delete_length = my_strlen(remove);
     int j = 0;
 
     res = malloc(sizeof(char) * (str_length - delete_length + 1));

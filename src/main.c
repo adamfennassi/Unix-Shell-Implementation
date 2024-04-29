@@ -6,35 +6,18 @@
 */
 #include "mysh.h"
 
-char *remove_end_of_line(char *str)
+int execute_shell(env_config_t *env_strct, list_t *list)
 {
-    size_t len = strlen(str);
-    int i = len;
+    int value = is_cmd(env_strct, list);
 
-    while (i > 0 && (str[i - 1] == ' ' ||
-    str[i - 1] == '\t' || str[i - 1] == '\n')) {
-        i--;
-    }
-    str[i] = '\0';
-    return str;
+    if (value == -1)
+        value = launch_child(env_strct);
+    else if (value == 84)
+        return 84;
+    return value;
 }
 
-void line_to_token(env_config_t *env, char *line)
-{
-    char *token;
-    int max_tokens = 100000;
-    int i = 0;
-
-    env->line_cmd = malloc(sizeof(char *) * max_tokens);
-    token = strtok(line, " ");
-    while (token != NULL) {
-        env->line_cmd[i] = my_strdup(token);
-        token = strtok(NULL, " ");
-        i++;
-    }
-}
-
-int lunch_shell(list_t *list, env_config_t *env_strct)
+int launch_shell(list_t *list, env_config_t *env_strct)
 {
     char *line_cmd = NULL;
     int verif;
@@ -49,21 +32,22 @@ int lunch_shell(list_t *list, env_config_t *env_strct)
         }
         line_cmd = remove_end_of_line(line_cmd);
         line_to_token(env_strct, line_cmd);
+        env_strct->return_value = execute_shell(env_strct, list);
     }
 }
 
 char **init_env(char **env, env_config_t *env_strct)
 {
-    char *path;
-    char *new_path = NULL;
+    char *path = get_path(env);
+    char *new_path = remove_prefix(path, "PATH=");
     int num_tokens = 0;
     char *token;
     int i = 0;
+    char *copy_path;
 
     env_strct->env = get_env(env);
-    path = get_path(env);
-    new_path = remove_path(path);
-    for (char *ptr = strtok(new_path, ":");
+    copy_path = strdup(new_path);
+    for (char *ptr = strtok(copy_path, ":");
     ptr != NULL; ptr = strtok(NULL, ":"))
         num_tokens++;
     env_strct->path = malloc(sizeof(char *) * (num_tokens + 1));
@@ -86,5 +70,5 @@ int main(int ac, char **av, char **env)
     if (init_env(env, env_struct) == NULL)
         return 84;
     shell_list = init_list(env);
-    return lunch_shell(shell_list, env_struct);
+    return launch_shell(shell_list, env_struct);
 }

@@ -40,3 +40,22 @@ list_t *init_list(char **env)
     env_list = fill_list(env, head);
     return env_list;
 }
+
+void create_list(char *data, list_t *list)
+{
+    list_t *chain = malloc(sizeof(list_t));
+
+    for (; list->next != NULL; list = list->next);
+    chain->prev = list;
+    list->next = chain;
+    chain->lines_env = my_strdup(data);
+    chain->next = NULL;
+}
+
+char *get_env_ll(list_t *list, char *word)
+{
+    for (; list; list = list->next)
+        if (my_strcmp(word, list->lines_env) == 0)
+            return list->lines_env;
+    return NULL;
+}

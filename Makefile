@@ -11,6 +11,16 @@ SRC 	=	src/main.c\
 			src/get_env.c\
 			src/set_list.c\
 			src/my_putstr.c\
+			src/utils.c\
+			src/gestion_child.c\
+			src/gestion_cmd.c\
+			src/my_strcmp.c\
+			src/process_cd.c\
+			src/cd_utils.c\
+			src/my_strcat.c\
+			src/launch_child.c\
+			src/process_env.c\
+			src/cd_utils_2.c\
 
 OBJ	=	$(SRC:.c=.o)
 
