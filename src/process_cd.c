@@ -46,25 +46,25 @@ int simple_cd(list_t *list)
         return value_2;
 }
 
-int cd_with_dashe(list_t *chain)
+int previous_cd(list_t *chain)
 {
     int n = 6000;
     char *buff = NULL;
     char *cwd = NULL;
     char *oldpwd_env = NULL;
-    char *new_oldpwd = NULL;
+    char *current_pwd = NULL;
     int res = 0;
 
     oldpwd_env = get_env_ll(chain, "OLDPWD=");
-    new_oldpwd = getcwd(buff, n);
     if (oldpwd_env == NULL) {
         my_putstr(": No such file or directory.\n");
-        return 1;
+        return 84;
     }
+    current_pwd = getcwd(buff, n);
     oldpwd_env = remove_prefix(oldpwd_env, "OLDPWD=");
     chdir(oldpwd_env);
     cwd = getcwd(buff, n);
-    res = save_it(chain, new_oldpwd, cwd);
+    res = save_it(chain, current_pwd, cwd);
     return res;
 }
 
@@ -77,7 +77,7 @@ int arg_cd(env_config_t *env_struct, list_t *list)
     int value;
 
     if (my_strcmp("-", env_struct->line_cmd[1]) == 0)
-        value = cd_with_dashe(list);
+        value = previous_cd(list);
     else {
         oldpwd = getcwd(buffer, n);
         chdir(env_struct->line_cmd[1]);
