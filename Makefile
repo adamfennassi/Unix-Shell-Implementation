@@ -21,6 +21,8 @@ SRC 	=	src/main.c\
 			src/launch_child.c\
 			src/process_env.c\
 			src/cd_utils_2.c\
+			src/process_setenv.c\
+			src/process_unsetenv.c\
 
 OBJ	=	$(SRC:.c=.o)
 

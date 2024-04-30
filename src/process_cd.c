@@ -28,7 +28,7 @@ int simple_cd(list_t *list)
     char *buffer = NULL;
     int size = 6000;
     char *oldpwd = getcwd(buffer, size);
-    char *current_pwd = getcwd(buffer, size);
+    char *current_pwd;
     char **pwd_array = get_pwd_in_ll(list);
     int i = 0;
     int value = 0;
@@ -38,6 +38,7 @@ int simple_cd(list_t *list)
         return 84;
     for (; pwd_array[i]; i++);
     value = choose_pwd(list, i);
+    current_pwd = getcwd(buffer, size);
     value_2 = save_it(list, oldpwd, current_pwd);
     if (value_2 == 0)
         return value;

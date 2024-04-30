@@ -30,24 +30,28 @@ char **get_pwd_in_ll(list_t *list)
 
 void backing(int i)
 {
-    for (int x = 0; x != i; x++)
-        chdir("../");
+    for (int x = 2; x < i; x++) {
+        if (chdir("../") == -1) {
+            return;
+        }
+    }
 }
 
 int choose_pwd(list_t *list, int i)
 {
     int res = 0;
 
-    if (i == 1)
+    if (i == 1) {
         res = user_case(list);
-    else if (i == 2)
+    } else if (i == 2) {
         res = home_case(list);
-    else
+    } else {
         backing(i);
+    }
     return res;
 }
 
-void verif_position(list_t *element)
+void verif_position_to_delete(list_t *element)
 {
     if (element->prev == NULL)
         delete_head(element);
@@ -62,8 +66,8 @@ int search_if_pwd_exist(list_t *list, char *pwd)
     list_t *my_list = list;
 
     while (my_list) {
-        if (my_strcmp(pwd, my_list->lines_env) == 0) {
-            verif_position(my_list);
+        if (my_strncmp(pwd, my_list->lines_env, my_strlen(pwd)) == 0) {
+            verif_position_to_delete(my_list);
             return 0;
         } else
             my_list = my_list->next;

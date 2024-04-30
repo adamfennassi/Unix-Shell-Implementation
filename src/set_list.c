@@ -59,8 +59,9 @@ void create_list(char *data, list_t *list)
 
 char *get_env_ll(list_t *list, char *word)
 {
-    for (; list; list = list->next)
-        if (my_strcmp(word, list->lines_env) == 0)
+    for (; list; list = list->next) {
+        if (my_strncmp(word, list->lines_env, my_strlen(word)) == 0)
             return list->lines_env;
+    }
     return NULL;
 }

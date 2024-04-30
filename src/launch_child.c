@@ -58,6 +58,7 @@ int check_child_status(int status, env_config_t *env_strct)
     int res;
 
     if (WIFSIGNALED(status)) {
+        printf("%d\n", status);
         res = error_checker(status, env_strct);
         if (res != 0)
             return res;
@@ -79,7 +80,10 @@ int launch_child(env_config_t *env_strct)
         return 84;
     child = fork();
     if (child == 0) {
-        execve(env_strct->execute, env_strct->line_cmd, env_strct->env);
+        if (execve(env_strct->execute,
+        env_strct->line_cmd, env_strct->env) == -1) {
+            exit(0);
+        }
     } else if (child == -1) {
         my_putstr("error");
         return 84;

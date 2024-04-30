@@ -10,9 +10,10 @@ char *in_linked_list(list_t *list, char *word)
 {
     list_t *my_list = list;
 
-    for (; my_list; my_list = my_list->next)
-        if (my_strcmp(my_list->lines_env, word) == 0)
+    for (; my_list; my_list = my_list->next) {
+        if (my_strncmp(my_list->lines_env, word, my_strlen(word)) == 0)
             return my_list->lines_env;
+    }
     return NULL;
 }
 
@@ -30,12 +31,12 @@ int home_case(list_t *chain)
 
 int user_case(list_t *chain)
 {
-    char *user = get_env_ll(chain, "USER");
+    char *user = get_env_ll(chain, "USER=");
 
     user = remove_prefix(user, "USER=");
-    if (user != NULL)
+    if (user != NULL) {
         chdir(user);
-    else
+    } else
         return 84;
     return 0;
 }

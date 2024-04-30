@@ -36,6 +36,7 @@ char *remove_end_of_line(char *str);
 void line_to_token(env_config_t *env, char *line);
 int my_strcmp(char *s1, char *s2);
 char *my_strcat(char *dest, char const *src);
+int my_strncmp(const char *s1, const char *s2, int n);
 
 char *remove_prefix(char *str, char *);
 int get_len(char **env);
@@ -51,6 +52,7 @@ void create_list(char *data, list_t *head);
 int is_cmd(env_config_t *env_strct, list_t *list);
 int simple_cd(list_t *list);
 int arg_cd(env_config_t *env_strct, list_t *list);
+int launch_child(env_config_t *env_strct);
 
 int delete_head(list_t *element);
 int delete_middle(list_t *element);
@@ -58,7 +60,7 @@ int delete_tail(list_t *element);
 
 char **get_pwd_in_ll(list_t *list);
 int choose_pwd(list_t *list, int i);
-void verif_position(list_t *element);
+void verif_position_to_delete(list_t *element);
 int search_if_pwd_exist(list_t *list, char *pwd);
 char *in_linked_list(list_t *list, char *word);
 int home_case(list_t *chain);
@@ -68,4 +70,6 @@ char *get_env_ll(list_t *list, char *word);
 int simple_setenv(list_t *chain, env_config_t *env_strct);
 int setenv_line(list_t *list, env_config_t *env_strct);
 int print_env(list_t *chain);
+
+int unsetenv_many(list_t *list, env_config_t *);
 #endif /* MINISHELL_H_ */
