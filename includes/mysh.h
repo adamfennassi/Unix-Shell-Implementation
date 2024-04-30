@@ -65,7 +65,7 @@ int home_case(list_t *chain);
 int user_case(list_t *chain);
 char *get_env_ll(list_t *list, char *word);
 
-int add_to_env_line(list_t *chain, env_config_t *env_strct);
-int add_to_env_one_info(list_t *list, env_config_t *env_strct);
+int simple_setenv(list_t *chain, env_config_t *env_strct);
+int setenv_line(list_t *list, env_config_t *env_strct);
 int print_env(list_t *chain);
 #endif /* MINISHELL_H_ */

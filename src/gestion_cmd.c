@@ -9,6 +9,25 @@
 
 int execute_setenv(env_config_t *env_strct, list_t *list)
 {
+    int res = 0;
+
+    if (env_strct->line_cmd[1] == NULL) {
+        res = print_env(list);
+        return res;
+    }
+    if (env_strct->line_cmd[2] == NULL) {
+        res = simple_setenv(list, env_strct);
+        return res;
+    }
+    if (env_strct->line_cmd[3] == NULL) {
+        res = setenv_line(list, env_strct);
+        return res;
+    }
+    if (env_strct->line_cmd[3] != NULL) {
+        my_putstr("too many arguments");
+        return 1;
+    }
+    return res;
 }
 
 int execute_unsetenv(env_config_t *env_strct, list_t *list)
@@ -22,20 +41,9 @@ int execute_env(env_config_t *env_strct, list_t *list)
     if (env_strct->line_cmd[1] == NULL) {
         res = print_env(list);
         return res;
+    } else {
+        return 84;
     }
-    if (env_strct->line_cmd[2] == NULL) {
-        res = add_to_env_one_info(list, env_strct);
-        return res;
-    }
-    if (env_strct->line_cmd[3] == NULL) {
-        res = add_to_env_line(list, list);
-        return res;
-    }
-    if (env_strct->line_cmd[3] != NULL) {
-        write(2, "too many arguments\n", 19);
-        return 1;
-    }
-    return res;
 }
 
 int execute_cd(env_config_t *env_strct, list_t *list)

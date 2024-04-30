@@ -9,16 +9,21 @@
 
 list_t *fill_list(char **env, list_t *head)
 {
-    list_t *list = malloc(sizeof(list_t));
+    list_t *current = head;
+    list_t *new_node;
 
     for (int i = 1; env[i]; i++) {
-        for (; head->next != NULL; head = head->next);
-        list->prev = head;
-        head->next = list;
-        list->lines_env = my_strdup(env[i]);
-        list->next = NULL;
+        new_node = malloc(sizeof(list_t));
+        if (new_node == NULL) {
+            return NULL;
+        }
+        new_node->lines_env = my_strdup(env[i]);
+        new_node->next = NULL;
+        new_node->prev = current;
+        current->next = new_node;
+        current = new_node;
     }
-    return list;
+    return head;
 }
 
 list_t *init_head(char *head)
