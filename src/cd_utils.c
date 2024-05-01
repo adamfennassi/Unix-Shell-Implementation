@@ -69,8 +69,9 @@ int search_if_pwd_exist(list_t *list, char *pwd)
         if (my_strncmp(pwd, my_list->lines_env, my_strlen(pwd)) == 0) {
             verif_position_to_delete(my_list);
             return 0;
-        } else
+        } else {
             my_list = my_list->next;
+        }
     }
     return 84;
 }

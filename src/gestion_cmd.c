@@ -65,7 +65,7 @@ int execute_cd(env_config_t *env_strct, list_t *list)
     if (nb_arg > 2) {
         my_putstr("bash : cd: too many arguments\n");
         return 1;
-    } else if (nb_arg == 1) {
+    } else if (nb_arg == 1 || my_strcmp(env_strct->line_cmd[1], "~") == 0) {
         value = simple_cd(list);
         return value;
     } else {

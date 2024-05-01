@@ -65,11 +65,14 @@ int main(int ac, char **av, char **env)
 {
     env_config_t *env_struct = malloc(sizeof(env_config_t));
     list_t *shell_list = malloc(sizeof(list_t));
+    char *res;
 
     if (ac != 1)
         return 84;
     if (init_env(env, env_struct) == NULL)
         return 84;
     shell_list = init_list(env);
-    return launch_shell(shell_list, env_struct);
+    res = launch_shell(shell_list, env_struct);
+    printf("%s\n", res);
+    return res;
 }
