@@ -58,7 +58,6 @@ int check_child_status(int status, env_config_t *env_strct)
     int res;
 
     if (WIFSIGNALED(status)) {
-        printf("%d\n", status);
         res = error_checker(status, env_strct);
         if (res != 0)
             return res;
