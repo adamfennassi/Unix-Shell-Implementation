@@ -24,15 +24,17 @@ char *remove_end_of_line(char *str)
 void line_to_token(env_config_t *env, char *line)
 {
     char *token;
-    int max_tokens = 100000;
+    int MAX_TOKENS = 100000;
     int i = 0;
 
-    env->line_cmd = malloc(sizeof(char *) * max_tokens);
-    token = strtok(line, " ");
+    env->line_cmd = malloc(sizeof(char *) * MAX_TOKENS);
+    token = strtok(line, " \t");
     while (token != NULL) {
-        env->line_cmd[i] = my_strdup(token);
-        token = strtok(NULL, " ");
-        i++;
+        if (my_strlen(token) > 0) {
+            env->line_cmd[i] = my_strdup(token);
+            i++;
+        }
+        token = strtok(NULL, " \t");
     }
 }
 

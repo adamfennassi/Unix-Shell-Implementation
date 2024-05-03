@@ -23,6 +23,7 @@ SRC 	=	src/main.c\
 			src/cd_utils_2.c\
 			src/process_setenv.c\
 			src/process_unsetenv.c\
+			src/without_tab_space.c\
 
 OBJ	=	$(SRC:.c=.o)
 

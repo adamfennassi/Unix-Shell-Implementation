@@ -25,6 +25,10 @@ int setenv_line(list_t *chain, env_config_t *env_strct)
 
     if (line_to_add == NULL)
         return 84;
+    if (env_strct->line_cmd[1][0] < 'A') {
+        my_putstr("setenv: Variable name must begin with a letter\n");
+        return 84;
+    }
     res = search_if_pwd_exist(chain, line_to_add);
     line_to_add = my_strcat(line_to_add, env_strct->line_cmd[2]);
     create_list(line_to_add, chain);

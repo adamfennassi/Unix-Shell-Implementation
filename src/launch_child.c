@@ -79,9 +79,9 @@ int launch_child(env_config_t *env_strct)
         return 84;
     child = fork();
     if (child == 0) {
-        if (execve(env_strct->execute,
-        env_strct->line_cmd, env_strct->env) == -1) {
-            exit(0);
+    if (execve(env_strct->execute, env_strct->line_cmd,
+    env_strct->env) == -1) {
+        exit(0);
         }
     } else if (child == -1) {
         my_putstr("error");
