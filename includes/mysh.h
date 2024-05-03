@@ -72,6 +72,4 @@ int setenv_line(list_t *list, env_config_t *env_strct);
 int print_env(list_t *chain);
 
 int unsetenv_many(list_t *list, env_config_t *);
-char **without_tab(char **line_cmd);
-char **without_space(char **line_cmd);
 #endif /* MINISHELL_H_ */
