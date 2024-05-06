@@ -23,6 +23,14 @@ int save_it(list_t *list, char *oldpwd, char *current_pwd)
     return 0;
 }
 
+int return_value(int value, int value_2)
+{
+    if (value_2 == 0)
+        return value;
+    else
+        return value_2;
+}
+
 int simple_cd(list_t *list)
 {
     char *buffer = NULL;
@@ -36,14 +44,15 @@ int simple_cd(list_t *list)
 
     if (pwd_array == NULL)
         return 84;
+    value_2 = save_it(list, oldpwd, oldpwd);
+    pwd_array = get_pwd_in_ll(list);
     for (; pwd_array[i]; i++);
+    if (i == 0)
+        i = 2;
     value = choose_pwd(list, i);
     current_pwd = getcwd(buffer, size);
     value_2 = save_it(list, oldpwd, current_pwd);
-    if (value_2 == 0)
-        return value;
-    else
-        return value_2;
+    return return_value(value, value_2);
 }
 
 int previous_cd(list_t *chain)

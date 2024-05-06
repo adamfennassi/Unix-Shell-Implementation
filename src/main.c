@@ -33,7 +33,6 @@ int launch_shell(list_t *list, env_config_t *env_strct)
         }
         line_cmd = remove_end_of_line(line_cmd);
         line_to_token(env_strct, line_cmd);
-        printf("%s\n", env_strct->line_cmd[0]);
         env_strct->return_value = execute_shell(env_strct, list);
     }
 }

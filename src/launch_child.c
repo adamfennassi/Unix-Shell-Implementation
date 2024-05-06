@@ -22,8 +22,11 @@ int choose_command(env_config_t *env_strct)
         if (access_is_possible(env_strct->line_cmd[0]) == 0) {
             env_strct->execute = env_strct->line_cmd[0];
             return 0;
-        } else
-            return 84;
+        } else {
+            my_putstr(env_strct->line_cmd[0]);
+            my_putstr(": Command not found.\n");
+            exit(1);
+        }
     }
     for (int i = 0; env_strct->path[i]; i++) {
         env_strct->execute = my_strcat(env_strct->path[i], "/");
