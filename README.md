@@ -36,7 +36,6 @@ Ce projet est une implémentation en C d'un interpréteur de commandes UNIX. L'o
 ```bash
 make
 ./mysh 
-voila read me rajoute la touche
 ```
 
 ## Tests de robustesse
