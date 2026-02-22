@@ -35,7 +35,7 @@ CFLAGS	=	$(INCLUDES) -Wall -Wextra -g
 all: 	$(NAME)
 
 $(NAME):	$(OBJ)
-		gcc -o $(NAME) $(OBJ)
+        	gcc $(CFLAGS) -o $(NAME) $(OBJ)
 
 clean:
 	rm -f $(OBJ)

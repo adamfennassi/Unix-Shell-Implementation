@@ -76,7 +76,7 @@ int launch_child(env_config_t *env_strct)
 {
     int res = choose_command(env_strct);
     pid_t child;
-    int status;
+    int status = 0;
 
     if (res != 0)
         return 84;

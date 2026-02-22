@@ -65,6 +65,7 @@ int main(int ac, char **av, char **env)
 {
     env_config_t *env_struct = malloc(sizeof(env_config_t));
     list_t *shell_list = malloc(sizeof(list_t));
+    (void)av;
 
     if (ac != 1)
         return 84;
